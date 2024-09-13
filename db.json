@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Juan Pérez",
+    "fechaIngreso": "21 mayo, 2023",
+    "fechaSalida": "23 mayo, 2023",
+    "tipoHabitacion": "single",
+    "numeroAdultos": 1,
+    "numeroHijos": 0,
+    "numeroReserva": 13312
+  },
+
+  {
+    "id": 2,
+    "name": "Ana Luna",
+    "fechaIngreso": "14 mayo, 2023",
+    "fechaSalida": "17 mayo, 2023",
+    "tipoHabitacion": "doble",
+    "numeroAdultos": 2,
+    "numeroHijos": 0,
+   "numeroReserva": 12345
+  }
+]
