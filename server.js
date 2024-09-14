@@ -9,16 +9,16 @@ const port = process.env.PORT || 3000;
 const serverUrl = process.env.SERVER_URL || `http://localhost:${port}`;
 
 const swaggerOptions = {
-    definition: {
-        openapi: "3.0.0",
-        info: {
-        title: "Node API for Order Management",
-        version: "1.0.0",
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Jimena Espinoza C15 - Proyecto 4 Documentación",
+      version: "1.0.0",
     },
     servers: [
-        {
+      {
         url: serverUrl,
-        },
+      },
     ],
   },
   apis: [`${path.join(__dirname, "./routes/*.js")}`],
@@ -31,7 +31,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/orders", require("./routes/orders"));
-app.use("/", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+app.use("/api/reservas", require("./routes/routes"));
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
-app.listen(port, () => console.log(`Servidor corriendo en el puerto ${port}`));
+app.listen( port, () => {
+    console.log(`Servidor corriendo en http://localhost:${port}`);
+    console.log(
+      `Servidor Swagger en http://localhost:${port}/api-docs`
+    );
+});

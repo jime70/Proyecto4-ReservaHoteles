@@ -1,24 +1,69 @@
 let reservas = [
   {
     id: 1,
-    name: "Juan Pérez",
-    fechaIngreso: "21 mayo, 2023",
-    fechaSalida: "23 mayo, 2023",
-    tipoHabitacion: "single",
-    numeroAdultos: 1,
-    numeroHijos: 0,
-    numeroReserva: 13312,
+    passengerName: "Juan Pérez",
+    hotelName: "Hotel Paraiso",
+    arrivalDate: "21 mayo, 2023",
+    departureDate: "23 mayo, 2023",
+    room: "suite",
+    passengers: 1,
+    mail: "juan1234@gmail.com",
+    bookingNumber: 13312,
+    bookingStatus: "reservado",
+    paymentStatus: "pagado",
   },
 
   {
     id: 2,
-    name: "Ana Luna",
-    fechaIngreso: "14 mayo, 2023",
-    fechaSalida: "17 mayo, 2023",
-    tipoHabitacion: "doble",
-    numeroAdultos: 2,
-    numeroHijos: 0,
-    numeroReserva: 12345,
+    passengerName: "Ana de la Cruz",
+    hotelName: "Hotel Pararaiso",
+    arrivalDate: "18 octubre, 2023",
+    departureDate: "23 octubre, 2023",
+    room: "doble",
+    passengers: 4,
+    mail: "an.cruz.am@gmail.com",
+    bookingNumber: 12345,
+    bookingStatus: "reservado",
+    paymentStatus: "pagado",
+  },
+  {
+    id: 3,
+    passengerName: "Cristian Ramirez",
+    hotelName: "Hotel Pararaiso",
+    arrivalDate: "07 octubre, 2023",
+    departureDate: "10 octubre, 2023",
+    room: "doble",
+    passengers: 6,
+    mail: "cramirezc@gmail.com",
+    bookingNumber: 37813,
+    bookingStatus: "pendiente",
+    paymentStatus: "pendiente",
+  },
+  {
+    id: 4,
+    passengerName: "Nikko Bran",
+    hotelName: "Hotel Pararaiso",
+    arrivalDate: "23 diciembre, 2023",
+    departureDate: "26 diciembre, 2023",
+    room: "suite",
+    passengers: 2,
+    mail: "nikko.b@gmail.com",
+    bookingNumber: 34627,
+    bookingStatus: "reservado",
+    paymentStatus: "pagado",
+  },
+  {
+    id: 5,
+    passengerName: "Percybal de Rollo",
+    hotelName: "Hotel Pararaiso",
+    arrivalDate: "18 octubre, 2023",
+    departureDate: "23 octubre, 2023",
+    room: "doble",
+    passengers: 4,
+    mail: "derollopm@gmail.com",
+    bookingNumber: 54321,
+    bookingStatus: "reservado",
+    paymentStatus: "pendiente",
   },
 ];
 
@@ -88,10 +133,10 @@ exports.delete = async (req, res) => {
 
 // f-j. F
 exports.filter = async (req, res) => {
-  const { name, restaurant, date, status } = req.query;
+  const { nameHotel, restaurant, date, status } = req.query;
 
   const filteredreservas = reservas.filter((reserva) => {
-    if (name && reserva.name !== name) {
+    if (nameHotel && reserva.name !== nameHotel) {
       return false;
     }
     if (restaurant && reserva.restaurant !== restaurant) {

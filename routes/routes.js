@@ -1,14 +1,13 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
 const bookingController = require("../controllers/bookingController.js");
-
 
 /**
  * @swagger
  * components:
  *  schemas:
- *    Order:
+ *    Reservas:
  *      type: object
  *      properties:
  *        id:
@@ -46,20 +45,23 @@ const bookingController = require("../controllers/bookingController.js");
  *        - quantity
  *        - total
  *      example:
- *        id: 1
- *        name: "Pizza de peperoni"
- *        restaurant: "Pizza Hut"
- *        date: "2021-09-01"
- *        status: "Enviado"
- *        price: 100
- *        quantity: 2
- *        total: 200
+ *  id: 4,
+ *  passengerName: ikko Bran
+ *  hotelName: Hotel Pararaiso
+ *  arrivalDate: 23 diciembre, 2023
+ *  departureDate: 26 diciembre, 2023
+ *  room: suite
+ *  passengers: 2
+ *  mail: nikko.b@gmail.com
+ *  bookingNumber: 34627
+ *  bookingStatus: reservado
+ *  paymentStatus: pagado
  */
 
 // a. Crear pedido
 /**
  * @swagger
- * /api/orders:
+ * /api/reservas:
  *  post:
  *    summary: Create a new order
  *    tags: [Orders]
@@ -77,7 +79,7 @@ const bookingController = require("../controllers/bookingController.js");
  *            schema:
  *              $ref: '#/components/schemas/Order'
  */
-router.post('/', bookingController.create)
+router.post("/", bookingController.create);
 
 // b. Obtener la lista de pedidos
 /**
@@ -96,7 +98,7 @@ router.post('/', bookingController.create)
  *              items:
  *                $ref: '#/components/schemas/Order'
  */
-router.get('/', bookingController.readAll)
+router.get("/", bookingController.readAll);
 
 // d. Actualizar información de un pedido específico
 /**
@@ -128,7 +130,7 @@ router.get('/', bookingController.readAll)
  *      404:
  *        description: Order not found
  */
-router.put('/:id', bookingController.update)
+router.put("/:id", bookingController.update);
 
 // e. Eliminar un pedido específico
 /**
@@ -150,7 +152,7 @@ router.put('/:id', bookingController.update)
  *      404:
  *        description: Order not found
  */
-router.delete('/:id', bookingController.delete)
+router.delete("/:id", bookingController.delete);
 
 // f-j. Filtros
 /**
@@ -191,7 +193,7 @@ router.delete('/:id', bookingController.delete)
  *              items:
  *                $ref: '#/components/schemas/Order'
  */
-router.get('/search', bookingController.filter)
+router.get("/search", bookingController.filter);
 
 // c. Obtener información de un pedido específico
 /**
@@ -217,6 +219,6 @@ router.get('/search', bookingController.filter)
  *      404:
  *        description: Order not found
  */
-router.get('/:id', bookingController.readOne)
+router.get("/:id", bookingController.readOne);
 
-module.exports = router
+module.exports = router;
