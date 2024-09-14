@@ -133,13 +133,13 @@ exports.delete = async (req, res) => {
 
 // f-j. F
 exports.filter = async (req, res) => {
-  const { nameHotel, restaurant, date, status } = req.query;
+  const { nameHotel, room, date, status } = req.query;
 
   const filteredreservas = reservas.filter((reserva) => {
     if (nameHotel && reserva.name !== nameHotel) {
       return false;
     }
-    if (restaurant && reserva.restaurant !== restaurant) {
+    if (room && reserva.room !== room) {
       return false;
     }
     if (date && reserva.date !== date) {
