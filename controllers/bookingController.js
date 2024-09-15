@@ -74,16 +74,103 @@ exports.create = async (req, res) => {
   reservas.push(newReserva);
 
   res.status(201).json({
-    msg: "Reserva creada con éxito.",
+    msg: "Su reserva ha sido creada con éxito. Muchas gracias por preferirnos.",
     data: newReserva,
   });
 };
 
 // b. Obtener la lista de Reservas
 exports.readAll = async (req, res) => {
+  const {
+    passengerName,
+    hotelName,
+    arrivalDate,
+    departureDate,
+    room,
+    passengers,
+    mail,
+    bookingNumber,
+    bookingStatus,
+    paymentStatus,
+  } = req.query;
+
+  let reservasFiltradas = reservas;
+
+  if (passengerName) {
+    reservasFiltradas = reservasFiltradas.filter(
+      (r) => r.passengerName.toLowerCase() === passengerName.toLowerCase()
+    );
+  }
+
+  if (hotelName) {
+    reservasFiltradas = reservasFiltradas.filter(
+      (r) => r.hotelName.toLowerCase() === hotelName.toLowerCase()
+    );
+  }
+
+  if (arrivalDate) {
+    reservasFiltradas = reservasFiltradas.filter(
+      (r) => r.arrivalDate.toLowerCase() === arrivalDate.toLowerCase()
+    );
+  }
+
+  if (departureDate) {
+    reservasFiltradas = reservasFiltradas.filter(
+      (r) => r.departureDate.toLowerCase() === departureDate.toLowerCase()
+    );
+  }
+
+  if (room) {
+    reservasFiltradas = reservasFiltradas.filter(
+      (r) => r.room.toLowerCase() === room.toLowerCase()
+    );
+  }
+
+  if (passengers) {
+    reservasFiltradas = reservasFiltradas.filter(
+      (r) => r.passengers === parseInt(passengers)
+    );
+  }
+
+  if (mail) {
+    reservasFiltradas = reservasFiltradas.filter(
+      (r) => r.mail.toLowerCase() === mail.toLowerCase()
+    );
+  }
+
+  if (bookingNumber) {
+    reservasFiltradas = reservasFiltradas.filter(
+      (r) => r.bookingNumber.toLowerCase() === bookingNumber.toLowerCase()
+    );
+  }
+
+  if (bookingStatus) {
+    reservasFiltradas = reservasFiltradas.filter(
+      (r) => r.bookingStatus.toLowerCase() === bookingStatus.toLowerCase()
+    );
+  }
+
+    if (paymentStatus) {
+      reservasFiltradas = reservasFiltradas.filter(
+        (r) => r.paymentStatus.toLowerCase() === paymentStatus.toLowerCase()
+      );
+    }
+
+  if (arrivalDate && departureDate) {
+    reservasFiltradas = reservasFiltradas.filter(
+      (r) => r.arrivalDate >= arrivalDate && r.departureDate <= departureDate
+    );
+  }
+
+  if (reservasFiltradas.length === 0) {
+    return res.status(404).json({
+      error: "No se encontraron reservaciones con los criterios entregados, por favor vuelva a intentar.",
+    });
+  }
+
   res.json({
-    msg: "Reserva realizada con éxito.",
-    data: reservas,
+    msg: "Reservaciones obtenidas con éxito, muchas gracias por preferirnos.",
+    data: reservasFiltradas,
   });
 };
 
@@ -108,7 +195,7 @@ exports.update = async (req, res) => {
   const reservaIndex = reservas.findIndex((o) => o.id === reservaId);
 
   if (reservaIndex === -1) {
-    return res.status(404).json({ msg: "Reserva no encontrada." });
+    return res.status(404).json({ msg: "Reserva no encontrada, por favor vuelva a intentar." });
   }
 
   reservas[reservaIndex] = { ...reservas[reservaIndex], ...req.body };
@@ -133,19 +220,37 @@ exports.delete = async (req, res) => {
 
 // f-j. F
 exports.filter = async (req, res) => {
-  const { nameHotel, room, date, status } = req.query;
+  const { passengerName, hotelName, arrivalDate, departureDate, room, passengers, mail, bookingNumber, bookingStatus, paymentStatus } = req.query;
 
   const filteredreservas = reservas.filter((reserva) => {
-    if (nameHotel && reserva.name !== nameHotel) {
+    if (passengerName && reserva.passengerName !== passengerName) {
+      return false;
+    }
+    if (hotelName && reserva.hotelName !== hotelName) {
+      return false;
+    }
+    if (arrivalDate && reserva.arrivalDate !== arrivalDate) {
+      return false;
+    }
+    if (departureDate && reserva.departureDate !== departureDate) {
       return false;
     }
     if (room && reserva.room !== room) {
       return false;
     }
-    if (date && reserva.date !== date) {
+    if (passengers && reserva.passengers !== passengers) {
       return false;
     }
-    if (status && reserva.status !== status) {
+    if (mail && reserva.mail !== mail) {
+      return false;
+    }
+    if (bookingNumber && reserva.bookingNumber !== bookingNumber) {
+      return false;
+    }
+    if (bookingStatus && reserva.bookingStatus !== bookingStatus) {
+      return false;
+    }
+    if (paymentStatus && reserva.paymentStatus !== paymentStatus) {
       return false;
     }
     return true;
