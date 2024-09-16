@@ -31,7 +31,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/reservas", require("./routes/routes"));
+app.use("/api/bookings", require("./routes/routes"));
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 app.listen( port, () => {

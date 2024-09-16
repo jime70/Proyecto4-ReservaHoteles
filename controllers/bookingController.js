@@ -1,4 +1,4 @@
-let reservas = [
+let bookings = [
   {
     id: 1,
     passengerName: "Juan Pérez",
@@ -56,10 +56,10 @@ let reservas = [
     id: 5,
     passengerName: "Percybal de Rollo",
     hotelName: "Hotel Pararaiso",
-    arrivalDate: "18 octubre, 2023",
-    departureDate: "23 octubre, 2023",
+    arrivalDate: "15 octubre, 2023",
+    departureDate: "20 octubre, 2023",
     room: "doble",
-    passengers: 4,
+    passengers: 3,
     mail: "derollopm@gmail.com",
     bookingNumber: 54321,
     bookingStatus: "reservado",
@@ -67,11 +67,22 @@ let reservas = [
   },
 ];
 
+const getNextId = (reservations) => {
+  if (reservations.length === 0) {
+    return 1; // Si el array está vacío, empezamos con 1
+  } // Encontramos el ID más alto en el array
+  const maxId = reservations.reduce(
+    (max, reservation) => Math.max(max, reservation.id),
+    0
+  ); // Devolvemos el siguiente ID
+  return maxId + 1;
+};
+
 // a. Crear reserva
 exports.create = async (req, res) => {
   const newReserva = req.body;
-  newReserva.id = reservas.length + 1;
-  reservas.push(newReserva);
+  newReserva.id = getNextId(bookings);
+  bookings.push(newReserva);
 
   res.status(201).json({
     msg: "Su reserva ha sido creada con éxito. Muchas gracias por preferirnos.",
@@ -79,7 +90,7 @@ exports.create = async (req, res) => {
   });
 };
 
-// b. Obtener la lista de Reservas
+// b. Obtener la lista de bookings
 exports.readAll = async (req, res) => {
   const {
     passengerName,
@@ -94,90 +105,91 @@ exports.readAll = async (req, res) => {
     paymentStatus,
   } = req.query;
 
-  let reservasFiltradas = reservas;
+  let bookingsFiltradas = bookings;
 
   if (passengerName) {
-    reservasFiltradas = reservasFiltradas.filter(
+    bookingsFiltradas = bookingsFiltradas.filter(
       (r) => r.passengerName.toLowerCase() === passengerName.toLowerCase()
     );
   }
 
   if (hotelName) {
-    reservasFiltradas = reservasFiltradas.filter(
+    bookingsFiltradas = bookingsFiltradas.filter(
       (r) => r.hotelName.toLowerCase() === hotelName.toLowerCase()
     );
   }
 
   if (arrivalDate) {
-    reservasFiltradas = reservasFiltradas.filter(
+    bookingsFiltradas = bookingsFiltradas.filter(
       (r) => r.arrivalDate.toLowerCase() === arrivalDate.toLowerCase()
     );
   }
 
   if (departureDate) {
-    reservasFiltradas = reservasFiltradas.filter(
+    bookingsFiltradas = bookingsFiltradas.filter(
       (r) => r.departureDate.toLowerCase() === departureDate.toLowerCase()
     );
   }
 
   if (room) {
-    reservasFiltradas = reservasFiltradas.filter(
+    bookingsFiltradas = bookingsFiltradas.filter(
       (r) => r.room.toLowerCase() === room.toLowerCase()
     );
   }
 
   if (passengers) {
-    reservasFiltradas = reservasFiltradas.filter(
+    bookingsFiltradas = bookingsFiltradas.filter(
       (r) => r.passengers === parseInt(passengers)
     );
   }
 
   if (mail) {
-    reservasFiltradas = reservasFiltradas.filter(
+    bookingsFiltradas = bookingsFiltradas.filter(
       (r) => r.mail.toLowerCase() === mail.toLowerCase()
     );
   }
 
   if (bookingNumber) {
-    reservasFiltradas = reservasFiltradas.filter(
+    bookingsFiltradas = bookingsFiltradas.filter(
       (r) => r.bookingNumber.toLowerCase() === bookingNumber.toLowerCase()
     );
   }
 
   if (bookingStatus) {
-    reservasFiltradas = reservasFiltradas.filter(
+    bookingsFiltradas = bookingsFiltradas.filter(
       (r) => r.bookingStatus.toLowerCase() === bookingStatus.toLowerCase()
     );
   }
 
-    if (paymentStatus) {
-      reservasFiltradas = reservasFiltradas.filter(
-        (r) => r.paymentStatus.toLowerCase() === paymentStatus.toLowerCase()
-      );
-    }
+  if (paymentStatus) {
+    bookingsFiltradas = bookingsFiltradas.filter(
+      (r) => r.paymentStatus.toLowerCase() === paymentStatus.toLowerCase()
+    );
+  }
 
   if (arrivalDate && departureDate) {
-    reservasFiltradas = reservasFiltradas.filter(
+    bookingsFiltradas = bookingsFiltradas.filter(
       (r) => r.arrivalDate >= arrivalDate && r.departureDate <= departureDate
     );
   }
 
-  if (reservasFiltradas.length === 0) {
+  if (bookingsFiltradas.length === 0) {
     return res.status(404).json({
-      error: "No se encontraron reservaciones con los criterios entregados, por favor vuelva a intentar.",
+      error:
+        "No se encontraron reservaciones con los criterios entregados, por favor vuelva a intentar.",
     });
   }
 
   res.json({
     msg: "Reservaciones obtenidas con éxito, muchas gracias por preferirnos.",
-    data: reservasFiltradas,
+    data: bookingsFiltradas,
   });
 };
 
 // c. Obtener información de un Reserva específico
 exports.readOne = async (req, res) => {
   const reservaId = parseInt(req.params.id);
-  const reserva = reservas.find((o) => o.id === reservaId);
+  const reserva = bookings.find((o) => o.id === reservaId);
 
   if (!reserva) {
     return res.status(404).json({ msg: "Reserva no encontrado." });
@@ -192,37 +204,50 @@ exports.readOne = async (req, res) => {
 // d. Actualizar información de una Reserva específica
 exports.update = async (req, res) => {
   const reservaId = parseInt(req.params.id);
-  const reservaIndex = reservas.findIndex((o) => o.id === reservaId);
+  const reservaIndex = bookings.findIndex((o) => o.id === reservaId);
 
   if (reservaIndex === -1) {
-    return res.status(404).json({ msg: "Reserva no encontrada, por favor vuelva a intentar." });
+    return res
+      .status(404)
+      .json({ msg: "Reserva no encontrada, por favor vuelva a intentar." });
   }
 
-  reservas[reservaIndex] = { ...reservas[reservaIndex], ...req.body };
+  bookings[reservaIndex] = { ...bookings[reservaIndex], ...req.body };
   res.json({
     msg: "Reserva actualizada con éxito.",
-    data: reservas[reservaIndex],
+    data: bookings[reservaIndex],
   });
 };
 
 // e. Eliminar un Reserva específica
 exports.delete = async (req, res) => {
   const reservaId = parseInt(req.params.id);
-  const reservaIndex = reservas.findIndex((o) => o.id === reservaId);
+  const reservaIndex = bookings.findIndex((o) => o.id === reservaId);
 
   if (reservaIndex === -1) {
     return res.status(404).json({ msg: "Reserva no encontrada." });
   }
 
-  reservas.splice(reservaIndex, 1);
+  bookings.splice(reservaIndex, 1);
   res.json({ msg: "Reserva eliminada con éxito." });
 };
 
 // f-j. F
 exports.filter = async (req, res) => {
-  const { passengerName, hotelName, arrivalDate, departureDate, room, passengers, mail, bookingNumber, bookingStatus, paymentStatus } = req.query;
+  const {
+    passengerName,
+    hotelName,
+    arrivalDate,
+    departureDate,
+    room,
+    passengers,
+    mail,
+    bookingNumber,
+    bookingStatus,
+    paymentStatus,
+  } = req.query;
 
-  const filteredreservas = reservas.filter((reserva) => {
+  const filteredbookings = bookings.filter((reserva) => {
     if (passengerName && reserva.passengerName !== passengerName) {
       return false;
     }
@@ -256,12 +281,12 @@ exports.filter = async (req, res) => {
     return true;
   });
 
-  if (filteredreservas.length === 0) {
+  if (filteredbookings.length === 0) {
     return res.status(404).json({ msg: "Reserva no encontrado." });
   }
 
   res.json({
-    msg: "Reservas filtrados con éxito.",
-    data: filteredreservas,
+    msg: "bookings filtrados con éxito.",
+    data: filteredbookings,
   });
 };
