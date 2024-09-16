@@ -210,7 +210,7 @@ router.delete("/:id", bookingController.delete);
  *      - in: query
  *        name: bookingNumber
  *          type: number
- *        description: The given number of the booking
+ *        description: Shows the given number of the booking
  *      - in: query
  *        name: bookingStatus
  *          type: string
