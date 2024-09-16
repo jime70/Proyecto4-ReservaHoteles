@@ -9,8 +9,7 @@ let reservas = [
     num_huespedes: 1,
     mail: "juan1234@gmail.com",
     num_reserva: 13312,
-    estado: "reservado",
-    pago: "pagado",
+    estado: "pagado",
   },
 
   {
@@ -23,8 +22,7 @@ let reservas = [
     num_huespedes: 4,
     mail: "an.cruz.am@gmail.com",
     num_reserva: 12345,
-    estado: "reservado",
-    pago: "pagado",
+    estado: "pagado",
   },
   {
     id: 3,
@@ -36,8 +34,7 @@ let reservas = [
     num_huespedes: 6,
     mail: "cramirezc@gmail.com",
     num_reserva: 37813,
-    estado: "pendiente",
-    pago: "pendiente",
+    estado: "pendiente"
   },
   {
     id: 4,
@@ -49,8 +46,7 @@ let reservas = [
     num_huespedes: 2,
     mail: "nikko.b@gmail.com",
     num_reserva: 34627,
-    estado: "reservado",
-    pago: "pagado",
+    estado: "pendiente",
   },
   {
     id: 5,
@@ -62,8 +58,7 @@ let reservas = [
     num_huespedes: 3,
     mail: "derollopm@gmail.com",
     num_reserva: 54321,
-    estado: "reservado",
-    pago: "pendiente",
+    estado: "pagado",
   },
 ];
 
@@ -74,21 +69,53 @@ const getNextId = (reservas) => {
   const maxId = reservas.reduce(
     (max, reserva) => Math.max(max, reserva.id),
     0
-  ); // Devolvemos el siguiente ID
+  ); // Devolvemos el ID que sigue
   return maxId + 1;
 };
 
-// a. Crear reserva
 exports.create = async (req, res) => {
-  const newReserva = req.body;
-  newReserva.id = getNextId(reservas);
-  reservas.push(newReserva);
+  const {
+    nombre_pasajero,
+    hotel,
+    fecha_inicio,
+    fecha_fin,
+    tipo_habitacion,
+    num_huespedes,
+    mail,
+    num_reserva,
+    estado,
+  } = req.body;
 
-  res.status(201).json({
-    msg: "Su reserva ha sido creada con éxito. Muchas gracias por preferirnos.",
-    data: newReserva,
-  });
+  // Validación de datos
+  if (
+    !nombre_pasajero ||
+    !hotel ||
+    !fecha_inicio ||
+    !fecha_fin ||
+    !tipo_habitacion ||
+    !num_huespedes ||
+    !mail ||
+    !num_reserva ||
+    !estado
+  ) {
+    return res.status(400).json({
+      msg: "Todos los campos son obligatorios.",
+    });
+  }
+res.status(201).json({
+  msg: "Su reserva ha sido creada con éxito. Muchas gracias por preferirnos.",
+  //data: newReserva,
+});
 };
+
+
+// a. Crear reserva
+//exports.create = async (req, res) => {
+  //const newReserva = req.body;
+  //newReserva.id = getNextId(reservas);
+  //reservas.push(newReserva);
+
+//};
 
 // b. Obtener la lista de reservas
 exports.readAll = async (req, res) => {
@@ -102,7 +129,6 @@ exports.readAll = async (req, res) => {
     mail,
     num_reserva,
     estado,
-    pago,
   } = req.query;
 
   let reservasFiltradas = reservas;
@@ -158,12 +184,6 @@ exports.readAll = async (req, res) => {
   if (estado) {
     reservasFiltradas = reservasFiltradas.filter(
       (r) => r.estado.toLowerCase() === estado.toLowerCase()
-    );
-  }
-
-  if (pago) {
-    reservasFiltradas = reservasFiltradas.filter(
-      (r) => r.pago.toLowerCase() === pago.toLowerCase()
     );
   }
 
@@ -244,7 +264,6 @@ exports.filter = async (req, res) => {
     mail,
     num_reserva,
     estado,
-    pago,
   } = req.query;
 
   const filteredreservas = reservas.filter((reserva) => {
@@ -273,9 +292,6 @@ exports.filter = async (req, res) => {
       return false;
     }
     if (estado && reserva.estado !== estado) {
-      return false;
-    }
-    if (pago && reserva.pago !== pago) {
       return false;
     }
     return true;
