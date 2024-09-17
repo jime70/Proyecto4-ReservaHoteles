@@ -15,7 +15,7 @@ let reservas = [
   {
     id: 2,
     nombre_pasajero: "Ana de la Cruz",
-    hotel: "Hotel Pararaiso",
+    hotel: "Hotel Paraiso",
     fecha_inicio: "18 octubre, 2023",
     fecha_fin: "23 octubre, 2023",
     tipo_habitacion: "doble",
@@ -27,7 +27,7 @@ let reservas = [
   {
     id: 3,
     nombre_pasajero: "Cristian Ramirez",
-    hotel: "Hotel Pararaiso",
+    hotel: "Hotel Paraiso",
     fecha_inicio: "07 octubre, 2023",
     fecha_fin: "10 octubre, 2023",
     tipo_habitacion: "doble",
@@ -39,7 +39,7 @@ let reservas = [
   {
     id: 4,
     nombre_pasajero: "Nikko Bran",
-    hotel: "Hotel Pararaiso",
+    hotel: "Hotel Paraiso",
     fecha_inicio: "23 diciembre, 2023",
     fecha_fin: "26 diciembre, 2023",
     tipo_habitacion: "suite",
@@ -51,7 +51,7 @@ let reservas = [
   {
     id: 5,
     nombre_pasajero: "Percybal de Rollo",
-    hotel: "Hotel Pararaiso",
+    hotel: "Hotel Paraiso",
     fecha_inicio: "15 octubre, 2023",
     fecha_fin: "20 octubre, 2023",
     tipo_habitacion: "doble",
