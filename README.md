@@ -1,166 +1,78 @@
-![Banner](./images/banner.png)
+# PROYECTO 4: Reservas Hoteleras_Jimena_Espinoza
 
-# PROYECTO 4: Reservas Hoteleras
-
-## **ÍNDICE**
-
-* [1. Intro](#1-intro)
-* [2. Demo](#2-demo)
-* [3. ¿Qué construirás?](#3-qu%C3%A9-construir%C3%A1s)
-* [4. Objetivos de Aprendizaje](#4-objetivos-de-aprendizaje)
-* [5. Requisitos](#5-requisitos-y-entregables)
-* [6. Criterios de evaluación](#6-criterios-de-evaluaci%C3%B3n)
-* [7. Entregas](#7-entregas)
-
-****
+## **INTRODUCCION**
 
 ## 1. Intro
-En el camino de convertirte en un `fullstack dev`, aprenderás acerca de la división de responsabilidades en una arquitectura web. Has empleado `Node.js` como la tecnología principal para tu `Backend` en lecciones anteriores, ahora es momento de aplicar estos conocimientos en un proyecto de mundo real.
 
-En el `Backend`, recordarás que utilizamos las operaciones CRUD, que permiten manipular datos y persistirlos, ya sea en una estructura de datos (como haremos en este proyecto), o en una base de datos. Los clientes solicitan o envían información a estos servicios a través de las operaciones CRUD, ya sea a través de una interfaz de usuario en el Frontend o utilizando herramientas como [Postman](https://www.postman.com/), [Insomnia](https://insomnia.rest/) o [ThunderClient](https://www.thunderclient.com/).
+Este Proyecto representó un desafío bastante grande. El módulo en sí fue desafiante ya que hay mucha información que procesar y entender a través de la práctica y acostumbrarnos a utilizar herramientas como Postman, o Thunder Client para probar el programa que nos encomendaron. Pero ¿por qué este proyecto representó un desafío? Por su complejidad.
+En primer lugar, no era sólo una actividad la que debíamos hacer, sino dos:
 
-En este proyecto, construirás una aplicación de servicios CRUD para la industria hotelera, específicamente para la gestión de reservas. Además, le proporcionaremos un sistema de búsqueda. 
+* 1. Una de ellas es la construcción de una aplicación de servicios para la gestión de reservas hoteleras, que involucren las 4 operaciones CRUD que vimos en clases y
+* 2.También realizar otras 6 adicionales, relacionadas con filtros usando Node.js y Express.
 
-Opcionalmente, añadiremos documentación de la API, para facilitar la colaboración en equipos más grandes.
+El proyecto además debe contar con los siguientes requisitos:
+• Utilizar Node.js y Express para el desarrollo del servidor.
+• Contar con un archivo .env para las variables de entorno.
+• Contar con un archivo .gitignore que incluya las carpetas y archivos que deberán ocultarse para el repositorio.
+• Usar una arquitectura de carpetas.
+• Y también debe Implementar una serie de filtros por endpoint.
 
-![](images/edvin-johansson-rlwE8f8anOc-unsplash.png)
-
-****
-
-## 2. Demo
-
-Visita la demostración aquí: [LINK](https://github.com/UDDBootcamp/7M_FULLSTACK_M4_PROY/tree/master/demo)
-
-En esta demo, se muestra una aplicación de gestión de pedidos para restaurantes. Te recomendamos revisarla cuidadosamente antes de iniciar este proyecto, para asegurarte de que comprendes todos los requisitos.
-
-La documentación de la API en esta demo utiliza Swagger y OpenAPI. Aunque la documentación es opcional en este proyecto, te alentamos a explorarla.
-
-![](./images/api.png)
-
-****
-
-## 3. ¿Qué construirás?
-
-En este proyecto, te encontrarás con dos actividades:
-
-1. Construirás una aplicación de servicios para la gestión de reservas en hoteles que involucre las 4 operaciones `CRUD` y otras 6 adicionales relacionadas con filtros, utilizando Node.js y Express. 
-
-2. Opcionalmente, realizarás un proceso de investigación relacionado con la documentación de API, usando Swagger, con la estandarización OPENAPI, la cual se utiliza en equipos internacionales para construir servicios escalables.
-
-A continuación, determinamos las características del proyecto:
-
-- Utilizar Node.js y Express para el desarrollo del servidor.
-- Contar con un archivo `.env` para las variables de entorno, el cual establecerás el puerto.
-- Contar con un archivo `.gitignore` que incluya las carpetas y archivos que deberán ocultarse para el repositorio.
-- Usar una arquitectura de carpetas clara como se muestra a continuación. Es de tu gusto agregar más archivos, rutas, controladores o, si lo prefieres, sintetizar. La idea es que la asignación de responsabilidades de tu código pueda ser ubicado fácilmente.
-
-```
-EJEMPLO_TU_PROYECTO
+Construcción de la API
+Empezar a construir la API no fue sencilla. Tomé como base la arquitectura sugerida, mi API cuenta con lo siguiente:
 ├─ .env
-├─ .prettierrc
+├─ .gitignore
 ├─ README.md
 ├─ controllers
-│  └─ TU_CONTROLADOR.js
+│  └─ bookingControllers.js
 ├─ package-lock.json
 ├─ package.json
 ├─ routes
-│  └─ TU_RUTA.js
-└─ server.js  <- TU ARCHIVO DE ENTRADA
-```
+│  └─ routes.js
+└─ server.js
 
-- Implementar los siguientes 10 endpoints. 
+Se me hizo más fácil de entender, crear primero el archivo server.js, donde se configura un servidor usando Express que va a gestionar las reservas a través de /api/reservas y además permite el uso de CORS y carga la configuración del puerto desde un archivo .env.
 
-|Descripción del Endpoint|	Método|	Endpoint| Ejemplo. Caso de uso. |
-|-----------------------|----------|------------|---------|
-|Crear reserva	| POST| 	/api/reservas|Como viajero, quiero hacer una reserva en el hotel "Hotel Paraíso" para el 15 de mayo de 2023. Necesito una habitación doble para dos adultos y un niño.
-|Obtener la lista de reservas|	GET|	/api/reservas|Como gerente del hotel, quiero ver una lista de todas las reservas para hoy para poder planificar el trabajo del personal de limpieza y recepción.|
-|Obtener información de una reserva específica	|GET|	/api/reservas/:id|Como recepcionista, necesito verificar los detalles de la reserva del huésped que acaba de llegar al hotel. Su número de reserva es 12345.
-|Actualizar información de una reserva|	PUT|	/api/reservas/:id|Como huésped, necesito cambiar mi reserva en el hotel "Hotel Paraíso". Originalmente reservé una habitación doble, pero ahora necesito una suite familiar. Mi número de reserva es 12345.|
-|Eliminar una reserva específica	|DELETE|	/api/reservas/:id|Como viajero, tuve un cambio de planes y ya no necesito la habitación que reservé en el hotel "Hotel Paraíso". Mi número de reserva es 12345.|
-|Filtrar reservas por hotel|	GET|	/api/reservas?hotel=HOTEL|Como gerente de una cadena de hoteles, quiero ver todas las reservas para el "Hotel Paraíso" para el próximo mes.|
-|Filtrar reservas por rango de fechas|	GET|	/api/reservas?fecha_inicio=FECHA_INICIO&fecha_fin=FECHA_FIN|Como gerente del hotel, quiero ver todas las reservas para la semana de Navidad para poder planificar el personal y las actividades necesarias.|
-|Filtrar reservas por tipo de habitación|	GET|	/api/reservas?tipo_habitacion=TIPO_HABITACION|Como gerente del hotel, quiero ver todas las reservas para nuestras suites de lujo para el próximo mes para asegurarme de que todo esté en perfectas condiciones para nuestros huéspedes VIP.|
-|Filtrar reservas por estado|	GET|	/api/reservas?estado=ESTADO|Como gerente del hotel, quiero ver todas las reservas que están pendientes de pago para poder hacer un seguimiento con los clientes.|
-|Filtrar reservas por número de huéspedes|	GET|	/api/reservas?num_huespedes=NUM_HUESPEDES|Como gerente del hotel, quiero ver todas las reservas para grupos de más de 5 personas para el próximo mes, para poder planificar las necesidades adicionales de estos grupos grandes.|
+El archivo bookingController.js contiene toda la información donde se administra una lista de reservas de hotel, incluí unos ejemplos de base y contiene las funciones que permiten hacer un CRUD para crear nuevas reservas, leer todas o una específica, actualizarlas, eliminarlas y filtrarlas por distintos criterios como el nombre del pasajero, fechas o estado. También, cada operación genera una respuesta con éxito o un mensaje de error si algo falla.
 
+El archivo db.json representa una lista de reservas de hotel, donde cada objeto contiene información de un pasajero como su nombre, fechas de estancia, tipo de habitación, número de pasajeros, y el estado del pago. El archivo contiene los mismos ejemplos del archivo bookingController.js, básicamente, es una estructura para manejar y seguir detalles de las reservas de varios clientes que puede servir de referencia más clara en caso de querer acceder a esta información.
 
-- Opcionalmente, puedes utilizar este [schema](https://github.com/U-Camp/7M_FULLSTACK_M4_PROY/blob/main/schema.json) para guiarte. Si lo prefieres, puedes crearlo desde cero. Es tu decisión.
-- Opcionalmente, documentar todos tus `endpoints` utilizando `Swagger` y `OpenAPI` (observa la demo para ver su implementación).
-- Opcionalmente, configurar el proyecto para el despliegue en [render.com](https://render.com).
+Finalmente, en el archivo routes.js se definen las rutas para la API de reservas de hotel utilizando Express.js. El archivo consta de las líneas de código de las rutas principales para crear el CRUD que usaré para crear, obtener, actualizar y eliminar reservas. El archivo usa Swagger para documentar las rutas y esquemas, de la API. Las funciones que declaré en bookingController.js están asociadas a las rutas del Swagger ya que éstas se explican y grafican la lógica detrás de las operaciones. Por ejemplo, POST /api/reservas crea una nueva reserva, y GET /api/reservas/{id} obtiene información de una reserva específica por su ID.
 
+Probando la API
+Luego de varios ensayos y errores, logré levantar la API en mi puerto localhost:3000/api-docs
 
-****
+1.Crear una reserva
+Antes del último commit tenía todo el programa listo, pero al compararlo con los filtros solicitados, me di cuenta que tenía que cambiar el idioma porque tenía toda mi programación en inglés, siguiendo las sugerencias de los módulos anteriores. Todos los profesores nos han enfatizado en que nos acostumbremos a hacer los códigos en inglés, lo cual es explicable, pero ahora que tenía todo listo para enviarlo a revisión, me di cuenta que tenía que cambiar las líneas de código que se iban a usar en los filtros. Eso provocó que se me rompiera todo el código y tuviera que volver a revisar todo. Aún así, hay algunos filtros que los dejé levemente distintos por temor a que se vuelva a romper el código.
 
-## 4. Objetivos de aprendizaje
+El primero es crear una nueva reserva usando método POST, y con el endpoint (<https://localhost:3000/api-docs/#/reservas/post-api-reservas>)
+(./images/crear-reserva.png)
 
-- Aplicar las operaciones CRUD en un segmento de datos.
-- Desarrollar una API REST
-- Trabajar con datos estructurados
-- Implementar la lógica de negocios
-- Documentar una API
+2.Obtener listado de reservas con método GET
+También me llevé un susto con este método pero había que volver a ingresar al localhost por un tema de fallo de internet.
+(./images/obtener-listado.png)
 
-****
+3.Obtener información de una reserva específica con GET
+Este ejercicio me confundió un poco, porque no estaba segura de lo que me estaba pidiendo, tenía la confusión entre el número de reserva y el id.
+(./images/obtener-porID.png)
 
-## 5. Requisitos y entregables
+4.Actualizar información de una reserva – PUT
+Se actualiza información cambiando el tipo de habitación a “suite familiar”
+(./images/actualizar-PUT.png)
 
-Usa esta lista para saber los requisitos mínimos del proyecto:
-### GENERAL
-- [ ] Realizarse de manera individual
+5.Eliminar una reserva específica – DELETE
+(./images/borrar-DELETE.png)
 
-### ARQUITECTURA DE CARPETAS
+6.Filtrar reservas por tipo de habitación
+Para filtrar por tipo de habitación, usé Thunder Client, lo que me muestra que hay dos reservas para las suites de lujo.
+(./images/tipo-habitacion.png)
 
-- [ ] Crear una arquitectura de carpetas y archivos, clara
- 
-### APLICACIÓN DE SERVICIOS CRUD
+7.Filtrar reservas por estado
+En el caso de este ejercicio, me sale mejor hacerlo por Postman o por Thunder Client, en mi caso, usé este último para filtrar las reservas que se encuentran "pendiente".
+(./images/estado-pendiente.png)
 
-- [ ] Permitir la creación de reservas con los detalles necesarios (por ejemplo, hotel, tipo de habitación, número de huéspedes, fechas, etc.).
-- [ ] Permitir la visualización de la lista de reservas.
-- [ ] Permitir la obtención de la información de una reserva específica.
-- [ ] Permitir la actualización de la información de una reserva.
-- [ ] Permitir la eliminación de una reserva.
-- [ ] Permitir la búsqueda de reservas por hotel, rango de fechas, tipo de habitación, estado y número de huéspedes.
-- [ ] Almacenar los datos de las reservas en una estructura de datos.
+8.Filtrar reservas por número de huéspedes
+En este caso puse primero en el filtro num_huespedes y me arrojó un mensaje de error, nuevamente por un error de sintaxis. Una vez corregido, pude obtener el filtro solicitado.
+(./images/numero-huespedes.png)
 
-
-### CONTROL DE VERSIONES
-- [ ] Crear un repositorio en GitHub y subir el proyecto al mismo.
-
-
-### ENTREGA A TIEMPO
-- [ ] Entregar a tiempo el proyecto.
-
-
-### DOCUMENTACIÓN DE LA API (OPCIONAL)
-
-- [ ] Documentar todos los `endpoints` utilizando `Swagger` y `OpenAPI`
-
-
-### DESPLIEGUE (OPCIONAL)
-- [ ] Crear una URL de producción para este proyecto, a través de [render.com](https://render.com)
-
-
-
-****
-
-## 6. Criterios de evaluación
-
-Tu calificación estará definida en base a los siguientes criterios:
-
-
-| ÁREA       | % DEL TOTAL |
-| ------------- |:-------------:|
-|Arquitectura de carpetas y organización de código|50%
-|Estructura de datos y persistencia de información|20%
-|Uso adecuado del control de versiones (Git & GitHub)| 20%
-|Entrega a tiempo| 10%
-
-
-****
-
-## 7. Entregas
-
-- **Definición de fechas.** Habla con tus coaches sobre el periodo de entregas del proyecto. Es importante que te organices y hagas un seguimiento constante de tus avances para cumplir con los plazos establecidos.
-
-- **Cumple con los requisitos y entregables.** En caso de que no logres cumplir con todos los requisitos, se te asignará un progreso proporcional a lo que lograste. Recuerda que lo importante es entregar siempre tu proyecto, independientemente del grado de completitud.
-
-- **Repositorio en GitHub.** Al finalizar tu proyecto, debes subirlo a un repositorio en GitHub. Asegúrate de incluir un archivo README con una descripción de tu proyecto, las tecnologías utilizadas y cualquier otra información que consideres relevante.
+REFLEXIONES:
+Hay algunos puntos que debo seguir practicando, después de varios intentos logré levantar el servidor, pero me falta más práctica con Postman y con Thunder Client, para poder filtrar por información específica. Considero que me es necesario el tener más práctica en este sentido, aunque eso ya depende de cada uno y de nuestra curiosidad de aprender.
