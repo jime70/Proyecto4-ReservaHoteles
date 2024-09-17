@@ -2,7 +2,7 @@
 
 ## **INTRODUCCION**
 
-## 1. Intro
+## Intro
 
 Este Proyecto representó un desafío bastante grande. El módulo en sí fue desafiante ya que hay mucha información que procesar y entender a través de la práctica y acostumbrarnos a utilizar herramientas como Postman, o Thunder Client para probar el programa que nos encomendaron. Pero ¿por qué este proyecto representó un desafío? Por su complejidad.
 En primer lugar, no era sólo una actividad la que debíamos hacer, sino dos:
@@ -74,5 +74,6 @@ En el caso de este ejercicio, me sale mejor hacerlo por Postman o por Thunder Cl
 En este caso puse primero en el filtro num_huespedes y me arrojó un mensaje de error, nuevamente por un error de sintaxis. Una vez corregido, pude obtener el filtro solicitado.
 (./images/numero-huespedes.png)
 
-REFLEXIONES:
+## REFLEXIONES
+
 Hay algunos puntos que debo seguir practicando, después de varios intentos logré levantar el servidor, pero me falta más práctica con Postman y con Thunder Client, para poder filtrar por información específica. Considero que me es necesario el tener más práctica en este sentido, aunque eso ya depende de cada uno y de nuestra curiosidad de aprender.
